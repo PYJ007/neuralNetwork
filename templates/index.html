@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <style>
+        body
+        {
+            background-image: url(/static/image/neural5.jpg);
+            background-size: 100% 100% ;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+<body>
+{#<img src="{% static 'image/neural.png' %}">#}
+{#<img src="/static/image/neural.png">#}
+<div style="height: 320px;width: 500px;background-color: white;margin-top: 210px;margin-left: 500px;border-radius:10px;background: rgba(200,200,200,0.9);">
+    <div style="margin-left: 15px;margin-right: 15px;padding-top: 20px">
+    <form action="/index/" method="post">
+        <div class="input-group" style="margin-bottom: 30px">
+            <span class="input-group-addon" id="basic-addon1">经度</span>
+            <input type="text" class="form-control" placeholder="longitude" aria-describedby="basic-addon1" name="longitude" value="{{ r1 }}" id="longitude">
+        </div>
+        <div class="input-group" style="margin-bottom: 30px">
+            <span class="input-group-addon" id="basic-addon1">纬度</span>
+            <input type="text" class="form-control" placeholder="latitude" aria-describedby="basic-addon1" name="latitude" value="{{ r2 }}" id="latitude">
+        </div>
+{#        经度<div><input type="text" name="longitude" value="{{ r1 }}" id="longitude"></div>#}
+{#        纬度<div><input type="text" name="latitude" value="{{ r2 }}" id="latitude"></div>#}
+        <div style="margin-bottom: 30px;">
+            <button style="margin-right: 50px" type="button" class="btn btn-default" onclick="getLocation()">获取坐标</button>
+            <input style="margin-left: 60px" class="btn btn-default" type="submit" value="提交">
+        </div>
+        <div>
+           <h1>
+               {%if result == null %}
+               <span class="label label-default">平台推荐</span>
+               {%elif result != null %}
+               <span class="label label-default">{{ result }}</span>
+               <div>
+                    <span style="color:#778a99;font-size: 16px;font-weight: bold;margin-top: 40px">平台推荐在商城中选购该类作物种子</span>
+               </div>
+               {% endif %}
+           </h1>
+        </div>
+{#        <div class="result">#}
+{#            <div>推荐:{{ result }}</div>#}
+{#        </div>#}
+    </form>
+    </div>
+</div>
+    <script>
+        var x = document.getElementById("longitude");
+        var y = document.getElementById("latitude");
+        var z = document.getElementById("demo");
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            }
+            else {
+                x.innerHTML = "该浏览器不支持获取地理位置。";
+            }
+        }
+
+        function showPosition(position) {
+            x.value = position.coords.longitude;
+            y.value = position.coords.latitude;
+            {#$("#longitude").val(position.coords.longitude)#}
+            {#$("#latitude").val(position.coords.latitude)#}
+            {#z.innerHTML = "纬度: " + position.coords.latitude +#}
+            {#    "<br>经度: " + position.coords.longitude;#}
+        }
+    </script>
+</body>
+</html>
